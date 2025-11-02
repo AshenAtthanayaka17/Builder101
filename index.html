@@ -3,400 +3,421 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Logistics - Global Shipping Solutions</title>
+    <title>EduAdmin Dashboard</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Lucide Icons for professional-looking symbols -->
+    <!-- Load Lucide Icons for professional symbols -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        /* Custom configuration for Tailwind colors and font */
+        /* Custom Colors to match the design */
         :root {
-            --matrix-blue: #0A3D62; /* Deep Blue */
-            --matrix-accent: #00A8A5; /* Teal/Cyan Accent */
-            --matrix-bg: #F8F9FA;
+            --primary-blue: #1C3F93; /* Dark Blue */
+            --light-bg: #F0F5F9; /* Very light background for the whole page */
+            --card-border: #D1E4EF; /* Light border color */
+            --accent-purple: #A855F7;
+            --accent-pink: #EC4899;
+            --soft-blue: #EBF8FF; /* Light blue card background */
         }
-        .container-padding {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-        @media (min-width: 640px) {
-            .container-padding {
-                padding-left: 2.5rem;
-                padding-right: 2.5rem;
-            }
-        }
-        @media (min-width: 1024px) {
-            .container-padding {
-                padding-left: 5rem;
-                padding-right: 5rem;
-            }
-        }
-        /* Custom Scroll Snap for a smoother scrolling experience */
-        .snap-section {
-            scroll-snap-align: start;
-        }
-        /* Load Inter font from Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--matrix-bg);
-            scroll-behavior: smooth;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+        }
+
+        /* Set up the main layout using CSS Grid for the two sidebars and main content */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 80px 1fr; /* Fixed mini-sidebar (80px) and main area */
+            min-height: 100vh;
+        }
+
+        /* Main content area, including header and body */
+        .main-dashboard-area {
+            grid-template-rows: auto 1fr;
+            display: grid;
+        }
+
+        /* Styling for the large rounded card border around the main dashboard */
+        .dashboard-main-card {
+            border: 1px solid var(--card-border);
+            background-color: white;
+            border-radius: 1.5rem;
+            margin: 1rem;
+            padding: 1.5rem 1.5rem 2rem 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Custom Wave Chart Placeholder Styles */
+        .chart-placeholder {
+            height: 250px;
+            background: linear-gradient(to top, #fff 0%, #fff 40%, var(--light-bg) 100%);
+            border-radius: 0.5rem;
+            position: relative;
+        }
+        .wave-purple, .wave-pink {
+            position: absolute;
+            height: 100px; /* Base height for the waves */
+            width: 100%;
+            bottom: 30px; /* Position above the timeline */
+            opacity: 0.8;
+            filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.1));
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path fill="black" d="M0,0 L0,50 C150,80 300,20 500,50 C700,80 850,20 1000,50 L1000,0 Z"/></svg>');
+            mask-size: 100% 100%;
+        }
+        .wave-purple {
+            background-color: var(--accent-purple);
+            transform: scaleY(0.8) translateY(10px);
+        }
+        .wave-pink {
+            background-color: var(--accent-pink);
+            transform: scaleY(0.9) translateY(-10px);
+        }
+
+        /* Utility for the progress ring graphic */
+        .progress-ring {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: conic-gradient(var(--accent-pink) 0deg, var(--accent-pink) var(--progress), #F3F4F6 var(--progress));
+        }
+        .progress-ring-inner {
+            background-color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px white;
+        }
+        
+        /* Mobile Responsiveness: Mini-sidebar disappears on smaller screens */
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr; /* Full width */
+            }
+            .mini-sidebar {
+                display: none;
+            }
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body>
 
-    <!-- Header & Navigation -->
-    <header class="sticky top-0 z-50 bg-white shadow-lg">
-        <nav class="mx-auto flex items-center justify-between container-padding py-4">
-            <!-- Logo -->
-            <a href="#" class="flex items-center text-3xl font-extrabold text-[var(--matrix-blue)]">
-                MATRIX<span class="text-[var(--matrix-accent)] font-light">.</span>
-            </a>
-
-            <!-- Desktop Nav Links -->
-            <div class="hidden md:flex space-x-8 text-lg font-medium">
-                <a href="#products" class="text-gray-600 hover:text-[var(--matrix-accent)] transition duration-200">Services</a>
-                <a href="#technology" class="text-gray-600 hover:text-[var(--matrix-accent)] transition duration-200">Technology</a>
-                <a href="#benefits" class="text-gray-600 hover:text-[var(--matrix-accent)] transition duration-200">Benefits</a>
-                <a href="#contact" class="px-6 py-2 bg-[var(--matrix-blue)] text-white rounded-lg shadow-md hover:bg-opacity-90 transition duration-300">Track Shipment</a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition duration-200">
-                <i data-lucide="menu" class="w-7 h-7"></i>
+    <!-- Main Container -->
+    <div class="dashboard-layout">
+        
+        <!-- 1. Fixed Mini Sidebar (Hidden on Mobile) -->
+        <div class="mini-sidebar flex flex-col items-center py-6 bg-white border-r border-gray-100 shadow-xl">
+            <!-- Logo area -->
+            <button class="mb-10 text-xl font-black text-white p-2 rounded-xl bg-[var(--primary-blue)] shadow-lg hover:shadow-xl transition">
+                <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
             </button>
-        </nav>
-
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl">
-            <div class="px-4 pt-2 pb-4 space-y-2 flex flex-col items-center">
-                <a href="#products" class="w-full text-center py-2 text-lg font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Services</a>
-                <a href="#technology" class="w-full text-center py-2 text-lg font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Technology</a>
-                <a href="#benefits" class="w-full text-center py-2 text-lg font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Benefits</a>
-                <a href="#contact" class="w-full text-center mt-2 px-6 py-3 bg-[var(--matrix-accent)] text-white rounded-xl shadow-lg hover:bg-opacity-90 transition duration-300">Track Shipment</a>
+            
+            <!-- Navigation Icons -->
+            <div class="space-y-6">
+                <button class="p-3 text-gray-400 hover:text-[var(--primary-blue)] hover:bg-gray-50 rounded-lg transition"><i data-lucide="search" class="w-6 h-6"></i></button>
+                <button class="p-3 text-gray-400 hover:text-[var(--primary-blue)] hover:bg-gray-50 rounded-lg transition"><i data-lucide="sun" class="w-6 h-6"></i></button>
+                <button class="p-3 bg-[var(--accent-purple)] bg-opacity-10 text-[var(--accent-purple)] rounded-lg shadow-inner"><i data-lucide="user" class="w-6 h-6"></i></button>
+                <button class="p-3 text-gray-400 hover:text-[var(--primary-blue)] hover:bg-gray-50 rounded-lg transition"><i data-lucide="message-square" class="w-6 h-6"></i></button>
+                <button class="p-3 text-gray-400 hover:text-[var(--primary-blue)] hover:bg-gray-50 rounded-lg transition"><i data-lucide="mail" class="w-6 h-6"></i></button>
+                <button class="p-3 text-gray-400 hover:text-[var(--primary-blue)] hover:bg-gray-50 rounded-lg transition"><i data-lucide="settings" class="w-6 h-6"></i></button>
+            </div>
+            
+            <!-- Bottom Icon Placeholder -->
+            <div class="mt-auto">
+                <button class="p-3 text-gray-400 hover:text-red-500 rounded-lg transition"><i data-lucide="log-out" class="w-6 h-6"></i></button>
             </div>
         </div>
-    </header>
 
-    <main>
-        <!-- 1. Hero Section -->
-        <section class="relative h-screen flex items-center justify-center container-padding overflow-hidden bg-cover bg-center"
-            style="background-image: url('https://placehold.co/1920x1080/0A3D62/ffffff?text=Global+Shipping+Network+Visual');">
-            <!-- Overlay to increase text contrast -->
-            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-
-            <div class="relative z-10 max-w-4xl text-center text-white p-6">
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-4 animate-fadeIn">
-                    The Future of Global Logistics, <span class="text-[var(--matrix-accent)]">Delivered.</span>
-                </h1>
-                <p class="text-xl md:text-2xl font-light mb-8 opacity-0 animate-slideIn" style="animation-delay: 0.5s;">
-                    Seamless, secure, and smart transportation solutions across Air, Sea, and Land.
-                </p>
-                <a href="#products" class="inline-block px-10 py-4 text-xl font-bold bg-[var(--matrix-accent)] text-white rounded-xl shadow-2xl hover:bg-opacity-80 transform hover:scale-105 transition duration-500 opacity-0 animate-slideIn" style="animation-delay: 1s;">
-                    Explore Our Services
-                </a>
-            </div>
-        </section>
-
-        <!-- 2. Products/Services Section -->
-        <section id="products" class="py-20 bg-white snap-section">
-            <div class="max-w-7xl mx-auto container-padding">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-[var(--matrix-blue)]">
-                    Our Comprehensive Products
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Product Card 1: Sea Freight -->
-                    <div class="bg-gray-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-b-4 border-[var(--matrix-accent)]">
-                        <div class="text-[var(--matrix-accent)] mb-4"><i data-lucide="ship" class="w-10 h-10"></i></div>
-                        <h3 class="text-2xl font-bold mb-3 text-[var(--matrix-blue)]">Sea Freight Solutions</h3>
-                        <p class="text-gray-600 mb-6">Full Container Load (FCL) and Less than Container Load (LCL) options with optimized routes for maximum cost efficiency and global reach. Bulk and specialty cargo handling.</p>
-                        <a href="#" class="text-[var(--matrix-accent)] font-semibold flex items-center group">
-                            Learn More 
-                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </a>
-                    </div>
-                    
-                    <!-- Product Card 2: Air Cargo -->
-                    <div class="bg-gray-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-b-4 border-[var(--matrix-accent)]">
-                        <div class="text-[var(--matrix-accent)] mb-4"><i data-lucide="plane" class="w-10 h-10"></i></div>
-                        <h3 class="text-2xl font-bold mb-3 text-[var(--matrix-blue)]">Air Cargo Express</h3>
-                        <p class="text-gray-600 mb-6">Fast, reliable air transport for time-critical and high-value shipments. Charter options available for large or unusual cargo. Global express delivery network coverage.</p>
-                        <a href="#" class="text-[var(--matrix-accent)] font-semibold flex items-center group">
-                            Learn More 
-                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </a>
-                    </div>
-                    
-                    <!-- Product Card 3: Land Transport -->
-                    <div class="bg-gray-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-b-4 border-[var(--matrix-accent)]">
-                        <div class="text-[var(--matrix-accent)] mb-4"><i data-lucide="truck" class="w-10 h-10"></i></div>
-                        <h3 class="text-2xl font-bold mb-3 text-[var(--matrix-blue)]">Integrated Land Freight</h3>
-                        <p class="text-gray-600 mb-6">First and last-mile connectivity with road and rail services. Secure, temperature-controlled, and oversized transport options across all continents.</p>
-                        <a href="#" class="text-[var(--matrix-accent)] font-semibold flex items-center group">
-                            Learn More 
-                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </a>
+        <!-- 2. Main Dashboard Area (Header + Body) -->
+        <div class="main-dashboard-area">
+            
+            <!-- A. Top Header/Navbar -->
+            <header class="h-20 flex items-center justify-between container-padding border-b border-gray-200">
+                <div class="flex items-center space-x-6">
+                    <!-- Mobile Menu Toggle (only visible on mobile) -->
+                    <button id="mobile-sidebar-toggle" class="lg:hidden text-gray-600 hover:text-[var(--primary-blue)]">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <!-- Main Menu Links -->
+                    <div class="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-600">
+                        <a href="#" class="text-[var(--primary-blue)] font-bold">Emails</a>
+                        <a href="#" class="hover:text-[var(--primary-blue)]">Ecommerce</a>
+                        <a href="#" class="hover:text-[var(--primary-blue)]">Widgets</a>
+                        <a href="#" class="hover:text-[var(--primary-blue)]">Charts</a>
+                        <a href="#" class="hover:text-[var(--primary-blue)]">Forms & Table</a>
+                        <a href="#" class="hover:text-[var(--primary-blue)]">UI Elements</a>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- 3. Improvements & Technology Section -->
-        <section id="technology" class="py-20 bg-[var(--matrix-blue)] text-white snap-section">
-            <div class="max-w-7xl mx-auto container-padding">
-                <div class="md:flex md:items-center md:space-x-12">
-                    <!-- Image/Visual Placeholder for Technology -->
-                    <div class="md:w-1/2 mb-10 md:mb-0">
-                        <img src="https://placehold.co/600x400/00A8A5/ffffff?text=AI+Powered+Control+Dashboard" 
-                             alt="AI Powered Control Dashboard" 
-                             class="rounded-2xl shadow-2xl w-full h-auto object-cover border-4 border-[var(--matrix-accent)]">
-                    </div>
-
-                    <!-- Technology Description -->
-                    <div class="md:w-1/2">
-                        <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
-                            Matrix <span class="text-[var(--matrix-accent)]">IntelliTrack™</span>: The Next Generation of Logistics
-                        </h2>
-                        <p class="text-xl font-light mb-8 text-gray-200">
-                            We continuously invest in innovation to provide unparalleled transparency and efficiency. Our proprietary platform offers real-time visibility and predictive risk analysis.
-                        </p>
-                        
-                        <div class="space-y-4">
-                            <!-- Feature 1 -->
-                            <div class="flex items-start">
-                                <i data-lucide="trending-up" class="w-6 h-6 mr-3 mt-1 text-[var(--matrix-accent)] flex-shrink-0"></i>
-                                <div>
-                                    <h4 class="font-bold text-lg">Predictive Route Optimization</h4>
-                                    <p class="text-gray-300">AI-driven algorithms predict and avoid delays before they occur, improving transit times by up to 15%.</p>
-                                </div>
-                            </div>
-                            <!-- Feature 2 -->
-                            <div class="flex items-start">
-                                <i data-lucide="lock" class="w-6 h-6 mr-3 mt-1 text-[var(--matrix-accent)] flex-shrink-0"></i>
-                                <div>
-                                    <h4 class="font-bold text-lg">Blockchain Security Ledger</h4>
-                                    <p class="text-gray-300">Tamper-proof documentation and transparent custody transfer for ultimate cargo security and compliance.</p>
-                                </div>
-                            </div>
-                            <!-- Feature 3 -->
-                            <div class="flex items-start">
-                                <i data-lucide="globe" class="w-6 h-6 mr-3 mt-1 text-[var(--matrix-accent)] flex-shrink-0"></i>
-                                <div>
-                                    <h4 class="font-bold text-lg">360° Real-Time GPS Tracking</h4>
-                                    <p class="text-gray-300">Pinpoint location, temperature, and shock monitoring available on all critical shipments, 24/7.</p>
-                                </div>
-                            </div>
+                <!-- Right Side of Header -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 rounded-full"><i data-lucide="search" class="w-5 h-5"></i></button>
+                    <button class="p-2 text-gray-500 hover:text-gray-700 rounded-full"><i data-lucide="bell" class="w-5 h-5"></i></button>
+                    <button class="p-2 text-gray-500 hover:text-gray-700 rounded-full"><i data-lucide="mail" class="w-5 h-5"></i></button>
+                    <div class="flex items-center space-x-2 border-l pl-4">
+                        <div class="text-right leading-none">
+                            <p class="text-sm font-bold text-gray-800">EduAdmin</p>
+                            <p class="text-xs text-gray-500">Dashboard</p>
                         </div>
+                        <img src="https://placehold.co/40x40/1C3F93/ffffff?text=U" alt="User Profile" class="rounded-full w-10 h-10 object-cover border-2 border-[var(--primary-blue)]">
                     </div>
                 </div>
-            </div>
-        </section>
+            </header>
 
-        <!-- 4. Benefits Section -->
-        <section id="benefits" class="py-20 bg-gray-50 snap-section">
-            <div class="max-w-7xl mx-auto container-padding">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-[var(--matrix-blue)]">
-                    Benefits for Your Business
-                </h2>
+            <!-- B. Dashboard Main Body (The large rounded white card) -->
+            <div class="dashboard-main-card overflow-auto">
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
-                    <!-- Benefit 1 -->
-                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
-                            <i data-lucide="dollar-sign" class="w-8 h-8 text-white"></i>
+                <!-- Main Content Grid: 70% Left / 30% Right (approx) -->
+                <div class="grid lg:grid-cols-3 gap-6">
+
+                    <!-- Main Left/Center Column (The 70% part) -->
+                    <div class="lg:col-span-2 space-y-6">
+                        
+                        <!-- Top Row: XP Card, Profile Card -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            
+                            <!-- XP/Point Card (1/3 width) -->
+                            <div class="col-span-1 p-6 bg-white rounded-2xl shadow-lg border border-gray-100 flex flex-col justify-between">
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-700">XP 2400</h4>
+                                    <p class="text-sm text-gray-400">Point</p>
+                                </div>
+                                <div class="mt-4">
+                                    <!-- Progress Bar -->
+                                    <div class="h-2 bg-gray-200 rounded-full">
+                                        <div class="h-2 bg-[var(--primary-blue)] rounded-full w-3/4"></div>
+                                    </div>
+                                    <div class="flex justify-between mt-6 space-x-3">
+                                        <button class="flex-1 py-2 rounded-xl text-white font-semibold bg-green-500 hover:bg-green-600 transition">Continue</button>
+                                        <button class="flex-1 py-2 rounded-xl text-gray-600 font-semibold bg-gray-100 hover:bg-gray-200 transition">Skip</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Profile Card and Stats (2/3 width) -->
+                            <div class="col-span-2 p-6 bg-white rounded-2xl shadow-lg border border-gray-100 grid grid-cols-2 gap-4">
+                                <div class="col-span-2 flex items-center space-x-4 mb-4">
+                                    <img src="https://placehold.co/80x80/00A8A5/ffffff?text=AK" alt="Arka Khalif" class="rounded-2xl w-20 h-20 object-cover shadow-md border-2 border-[var(--accent-pink)]">
+                                    <div>
+                                        <h5 class="text-xl font-bold text-gray-800">Arka Khalif</h5>
+                                        <p class="text-sm text-gray-500">Surakarta, JNA</p>
+                                    </div>
+                                </div>
+
+                                <!-- Mini Stat Cards -->
+                                <div class="p-4 rounded-xl bg-[var(--soft-blue)] flex items-center justify-center space-x-3">
+                                    <div class="bg-[var(--primary-blue)] bg-opacity-10 text-[var(--primary-blue)] p-3 rounded-xl">
+                                        <i data-lucide="award" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-2xl font-bold">28</p>
+                                        <p class="text-sm text-gray-500">Certification</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-[var(--soft-blue)] flex items-center justify-center space-x-3">
+                                    <div class="bg-[var(--primary-blue)] bg-opacity-10 text-[var(--primary-blue)] p-3 rounded-xl">
+                                        <i data-lucide="book-open-check" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-2xl font-bold">24</p>
+                                        <p class="text-sm text-gray-500">Course</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Cost Optimization</h4>
-                        <p class="text-gray-600">Dynamic pricing models and efficient resource allocation reduce your overall shipping spend.</p>
+
+                        <!-- Mid Row: Target and Consultation Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Set Target Card -->
+                            <div class="p-6 rounded-2xl shadow-lg bg-[var(--accent-purple)] text-white relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-4 text-white opacity-20">
+                                    <i data-lucide="target" class="w-12 h-12"></i>
+                                </div>
+                                <div class="mb-4 bg-white bg-opacity-20 p-2 inline-block rounded-lg">
+                                    <i data-lucide="clock" class="w-6 h-6"></i>
+                                </div>
+                                <h5 class="text-xl font-bold">Set target</h5>
+                                <p class="text-sm opacity-80 mb-6">Set target, reminders and your study time.</p>
+                                <button class="py-2 px-6 rounded-xl text-sm font-semibold text-[var(--accent-purple)] bg-white hover:bg-gray-50 transition">Set target</button>
+                            </div>
+
+                            <!-- Consultation Card -->
+                            <div class="p-6 rounded-2xl shadow-lg bg-orange-500 text-white relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-4 text-white opacity-20">
+                                    <i data-lucide="message-circle" class="w-12 h-12"></i>
+                                </div>
+                                <div class="mb-4 bg-white bg-opacity-20 p-2 inline-block rounded-lg">
+                                    <i data-lucide="users" class="w-6 h-6"></i>
+                                </div>
+                                <h5 class="text-xl font-bold">Consultation</h5>
+                                <p class="text-sm opacity-80 mb-6">Get a mentor help your learning process.</p>
+                                <button class="py-2 px-6 rounded-xl text-sm font-semibold text-orange-500 bg-white hover:bg-gray-50 transition">Consultation</button>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row: Analytics Chart -->
+                        <div class="p-6 rounded-2xl shadow-lg bg-white border border-gray-100">
+                            <div class="flex justify-between items-center mb-6">
+                                <h5 class="text-lg font-bold text-gray-800">Core Language</h5>
+                                <div class="flex items-center space-x-4 text-sm font-medium">
+                                    <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[var(--accent-purple)] mr-2"></span>Exams</span>
+                                    <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[var(--accent-pink)] mr-2"></span>Material</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Chart Placeholder -->
+                            <div class="chart-placeholder">
+                                <div class="wave-purple"></div>
+                                <div class="wave-pink"></div>
+                                <div class="absolute inset-0 z-10 p-2 text-xs text-gray-500">
+                                    <div class="h-full border-l border-b border-gray-200 grid grid-rows-3">
+                                        <span class="absolute -left-10 top-0">90</span>
+                                        <span class="absolute -left-10 top-1/3">67.5</span>
+                                        <span class="absolute -left-10 top-2/3">45</span>
+                                        <span class="absolute -left-10 bottom-0">22.5</span>
+                                        <!-- X-Axis Labels -->
+                                        <div class="absolute bottom-0 h-4 w-full flex justify-around items-center">
+                                            <span class="-translate-y-6 text-gray-400">2013</span>
+                                            <span class="-translate-y-6 text-gray-400">2014</span>
+                                            <span class="-translate-y-6 text-gray-400">2016</span>
+                                            <span class="-translate-y-6 text-gray-400">2017</span>
+                                            <span class="-translate-y-6 text-gray-400">2018</span>
+                                            <span class="-translate-y-6 text-gray-400">2019</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- Benefit 2 -->
-                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
-                            <i data-lucide="clock" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Guaranteed Timeliness</h4>
-                        <p class="text-gray-600">Industry-leading on-time delivery rates supported by smart scheduling and contingency planning.</p>
-                    </div>
-                    
-                    <!-- Benefit 3 -->
-                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
-                            <i data-lucide="check-circle" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Regulatory Compliance</h4>
-                        <p class="text-gray-600">Expert global customs and compliance team ensures seamless international trade with zero hassle.</p>
-                    </div>
-                    
-                    <!-- Benefit 4 -->
-                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
-                            <i data-lucide="leaf" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Sustainable Shipping</h4>
-                        <p class="text-gray-600">Committed to reducing our carbon footprint with optimized routes and eco-friendly transport options.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    <!-- Right Sidebar Column (The 30% part) -->
+                    <div class="lg:col-span-1 space-y-6">
 
-        <!-- 5. CTA Section (Contact) -->
-        <section id="contact" class="py-20 bg-[var(--matrix-accent)] text-white snap-section">
-            <div class="max-w-4xl mx-auto text-center container-padding">
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
-                    Ready to Transform Your Supply Chain?
-                </h2>
-                <p class="text-xl font-light mb-8">
-                    Connect with a Matrix logistics expert today to design a personalized shipping strategy.
-                </p>
-                <button onclick="document.getElementById('contact-form-modal').classList.remove('hidden')" class="px-10 py-4 text-xl font-bold bg-white text-[var(--matrix-blue)] rounded-xl shadow-2xl hover:bg-gray-100 transform hover:scale-105 transition duration-500">
-                    Get a Free Quote
-                </button>
-            </div>
-        </section>
-    </main>
+                        <!-- Greeting Card -->
+                        <div class="p-6 rounded-2xl bg-white shadow-lg border border-gray-100">
+                            <div class="flex items-start mb-4">
+                                <div class="w-12 h-12 p-3 bg-yellow-100 text-yellow-500 rounded-xl mr-4">
+                                    <i data-lucide="hand" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">Hello, Arka</h3>
+                                    <p class="text-sm text-gray-500">
+                                        Nice to have you back, what an exciting day. Get ready and continue your lesson today
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-10">
-        <div class="max-w-7xl mx-auto container-padding grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-                <h4 class="text-lg font-bold text-white mb-4">Matrix Logistics</h4>
-                <p class="text-sm">Driving global commerce with integrity and innovation since 1995.</p>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#products" class="hover:text-[var(--matrix-accent)] transition">Services</a></li>
-                    <li><a href="#technology" class="hover:text-[var(--matrix-accent)] transition">Technology</a></li>
-                    <li><a href="#benefits" class="hover:text-[var(--matrix-accent)] transition">Benefits</a></li>
-                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Careers</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold text-white mb-4">Resources</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Customer Login</a></li>
-                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">FAQ</a></li>
-                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Terms of Service</a></li>
-                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold text-white mb-4">Contact Us</h4>
-                <p class="text-sm">Global HQ: 123 Logistics Way, New York, USA</p>
-                <p class="text-sm">Phone: +1 (800) MATRIX-0</p>
-                <p class="text-sm">Email: info@matrixlogistics.com</p>
-                <div class="flex space-x-4 mt-4">
-                    <a href="#" class="text-white hover:text-[var(--matrix-accent)]"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-white hover:text-[var(--matrix-accent)]"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-white hover:text-[var(--matrix-accent)]"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <!-- Today's Course Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-bold text-gray-800">Today's course</h4>
+
+                            <!-- Course Card 1: Biology -->
+                            <div class="p-5 rounded-2xl bg-[var(--soft-blue)] shadow-md border border-gray-100">
+                                <h5 class="font-bold text-gray-800 mb-2">Biology Molecular</h5>
+                                <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                                    <span class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-1"></i> 50 min</span>
+                                    <span class="flex items-center"><i data-lucide="book-open" class="w-4 h-4 mr-1"></i> 21 lesson</span>
+                                    <span class="flex items-center"><i data-lucide="file-text" class="w-4 h-4 mr-1"></i> 5 assignment</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <button class="py-2 px-4 rounded-xl text-white text-sm font-semibold bg-green-500 hover:bg-green-600 transition">Continue</button>
+                                        <button class="py-2 px-4 rounded-xl text-gray-600 text-sm font-semibold bg-white hover:bg-gray-100 transition">Skip</button>
+                                    </div>
+                                    <!-- Progress Ring for 79% -->
+                                    <div class="relative progress-ring" style="--progress: 79%;">
+                                        <div class="progress-ring-inner flex flex-col justify-center items-center">
+                                            <p class="text-xs font-bold text-gray-800">79%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Course Card 2: Color Theory -->
+                            <div class="p-5 rounded-2xl bg-white shadow-md border border-gray-100">
+                                <h5 class="font-bold text-gray-800 mb-2">Color Theory</h5>
+                                <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                                    <span class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-1"></i> 40 min</span>
+                                    <span class="flex items-center"><i data-lucide="book-open" class="w-4 h-4 mr-1"></i> 10 lesson</span>
+                                    <span class="flex items-center"><i data-lucide="file-text" class="w-4 h-4 mr-1"></i> 2 assignment</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex space-x-3">
+                                        <button class="py-2 px-4 rounded-xl text-white text-sm font-semibold bg-green-500 hover:bg-green-600 transition">Continue</button>
+                                        <button class="py-2 px-4 rounded-xl text-gray-600 text-sm font-semibold bg-white hover:bg-gray-100 transition">Skip</button>
+                                    </div>
+                                    <!-- Progress Ring for 64% -->
+                                    <div class="relative progress-ring" style="--progress: 64%;">
+                                        <div class="progress-ring-inner flex flex-col justify-center items-center">
+                                            <p class="text-xs font-bold text-gray-800">64%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Your Classes Section -->
+                        <div class="pt-4 space-y-4">
+                            <h4 class="text-lg font-bold text-gray-800">Your classes</h4>
+
+                            <!-- Class Filter Tabs -->
+                            <div class="flex text-sm text-gray-600 font-medium border-b pb-2 space-x-4">
+                                <button class="text-[var(--primary-blue)] border-b-2 border-[var(--primary-blue)] pb-2">Coding</button>
+                                <button class="hover:text-[var(--primary-blue)]">Science</button>
+                                <button class="hover:text-[var(--primary-blue)]">Design</button>
+                                <button class="hover:text-[var(--primary-blue)]">All</button>
+                            </div>
+
+                            <!-- Class Item Card -->
+                            <div class="p-4 rounded-xl bg-white shadow-md border border-gray-100 flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 p-2 rounded-xl bg-green-500 bg-opacity-10 text-green-500 flex-shrink-0">
+                                        <i data-lucide="flask-conical" class="w-8 h-8"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-800">Microbiology Society</p>
+                                        <div class="flex text-xs text-gray-500 space-x-3">
+                                            <span class="flex items-center"><i data-lucide="clock" class="w-3 h-3 mr-1"></i> 45 min</span>
+                                            <span class="flex items-center"><i data-lucide="book-open" class="w-3 h-3 mr-1"></i> 10 lesson</span>
+                                            <span class="flex items-center"><i data-lucide="file-text" class="w-3 h-3 mr-1"></i> 2 assignment</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
-        </div>
-        <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
-            &copy; 2025 Matrix Global Shipping. All Rights Reserved.
-        </div>
-    </footer>
-    
-    <!-- Modal for Contact Form (Simple Quote Request) -->
-    <div id="contact-form-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-11/12 transform transition-all duration-300 scale-100">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-[var(--matrix-blue)]">Request a Quote</h3>
-                <button onclick="document.getElementById('contact-form-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            <form>
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-medium mb-1">Full Name</label>
-                    <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[var(--matrix-accent)] focus:border-[var(--matrix-accent)]" placeholder="Your Name" required>
-                </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-medium mb-1">Email Address</label>
-                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[var(--matrix-accent)] focus:border-[var(--matrix-accent)]" placeholder="your.email@company.com" required>
-                </div>
-                <div class="mb-6">
-                    <label for="details" class="block text-gray-700 font-medium mb-1">Shipment Details (Volume, Origin, Destination)</label>
-                    <textarea id="details" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[var(--matrix-accent)] focus:border-[var(--matrix-accent)]" placeholder="LCL from Shanghai to Rotterdam, 2 pallets"></textarea>
-                </div>
-                <button type="submit" class="w-full py-3 bg-[var(--matrix-blue)] text-white font-bold rounded-xl hover:bg-opacity-90 transition duration-300">
-                    Submit Request
-                </button>
-            </form>
+
         </div>
     </div>
 
 
     <script>
-        // Initialize Lucide Icons
+        // 1. Initialize Lucide Icons for all icons rendered in the page
         lucide.createIcons();
 
-        // JavaScript for Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // 2. Simple JS for mobile sidebar toggle (since the mini-sidebar is hidden on mobile)
+        const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
+        const miniSidebar = document.querySelector('.mini-sidebar');
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            // Change icon on click
-            const icon = mobileMenuButton.querySelector('i');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.setAttribute('data-lucide', 'menu');
-            } else {
-                icon.setAttribute('data-lucide', 'x');
-            }
-            lucide.createIcons(); // Re-render icon
-        });
-
-        // Close mobile menu when a link is clicked
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuButton.querySelector('i').setAttribute('data-lucide', 'menu');
-                    lucide.createIcons();
-                }
+        // This function is for demonstration purposes in a live environment,
+        // allowing the mini-sidebar to show up on smaller screens when clicked.
+        if (mobileSidebarToggle) {
+            mobileSidebarToggle.addEventListener('click', () => {
+                miniSidebar.classList.toggle('hidden');
+                miniSidebar.classList.toggle('fixed'); // make it fixed for a true overlay effect
+                miniSidebar.classList.toggle('inset-y-0');
+                miniSidebar.classList.toggle('z-50');
+                miniSidebar.style.width = '250px'; // Give it a wider width for mobile visibility
             });
-        });
-
-        // Simple animation trigger on scroll (for a modern feel)
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fadeIn', 'animate-slideIn');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.animate-fadeIn, .animate-slideIn').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Add CSS keyframes (since we can't use style blocks inside the JS part)
-        // This is necessary because the animation-delay styles are inline.
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @keyframes slideIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fadeIn {
-                animation: fadeIn 1s ease-out forwards;
-            }
-            .animate-slideIn {
-                animation: slideIn 1s ease-out forwards;
-            }
-        `;
-        document.head.appendChild(style);
-
+        }
     </script>
 </body>
 </html>
