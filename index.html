@@ -3,192 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>beFlix - Your Web Streaming Hub</title>
-    <!-- Load Tailwind CSS -->
+    <title>Ashen Atthanayaka | Full-Stack Developer</title>
+    <!-- Load Tailwind CSS CDN for modern utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide icons for clean, modern symbols -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Set default font to Inter -->
     <style>
-        /* Custom styles for a cleaner streaming interface look */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        :root {
+            --neon-cyan: #00ffff;
+            --dark-bg: #0d1117;
+            --dark-card: #161b22;
+            --text-color: #c9d1d9;
+            --text-muted: #8b949e;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            scroll-behavior: smooth;
         }
-        .stream-card {
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
+
+        /* Custom Neon Glow Button */
+        .neon-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px var(--neon-cyan), 0 0 15px var(--neon-cyan);
         }
-        .stream-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+
+        .neon-button:hover {
+            box-shadow: 0 0 10px var(--neon-cyan), 0 0 40px var(--neon-cyan), 0 0 80px var(--neon-cyan);
+            transform: scale(1.05);
         }
-        /* Style the main video player controls for better dark theme visibility */
-        video {
-            background-color: #000;
+
+        /* Blinking Cursor for the Hero Title */
+        .blinking-cursor {
+            color: var(--neon-cyan);
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-cyan); }
+        }
+        
+        /* --- Scroll Reveal Animation Setup --- */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        
+        .revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
 
-    <!-- Header / Navigation Bar -->
-    <header class="bg-gray-950 p-4 shadow-lg sticky top-0 z-10">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-bold tracking-tight text-red-600">
-                be<span class="text-white">Flix</span>
-            </h1>
-            <nav>
-                <a href="#tv-section" class="text-gray-300 hover:text-red-600 px-3 py-2 rounded-lg transition duration-150 text-lg md:text-xl">TV</a>
-                <a href="#radio-section" class="text-gray-300 hover:text-red-600 px-3 py-2 rounded-lg transition duration-150 text-lg md:text-xl">Radio</a>
-            </nav>
-        </div>
+<body class="antialiased">
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-[rgba(13,17,23,0.95)] border-b border-gray-700 backdrop-blur-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-extrabold tracking-wider" style="color: var(--neon-cyan);">
+                Ashen. <span class="text-white text-base">dev</span>
+            </a>
+            <div class="space-x-4 flex">
+                <a href="#about" class="text-sm text-gray-400 hover:text-white transition duration-200">/ About</a>
+                <a href="#skills" class="text-sm text-gray-400 hover:text-white transition duration-200">/ Skills</a>
+                <a href="#projects" class="text-sm text-gray-400 hover:text-white transition duration-200">/ Projects</a>
+                <a href="#contact" class="text-sm text-gray-400 hover:text-white transition duration-200">/ Contact</a>
+            </div>
+        </nav>
     </header>
 
-    <main class="container mx-auto p-4 md:p-8 space-y-12">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- TV Stream Section -->
-        <section id="tv-section" class="space-y-6">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-white border-l-4 border-red-600 pl-4 py-1">Featured Live TV Stream</h2>
-            <div class="bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
-                <!--
-                    TV STREAM: This is currently using a working MP4 sample (Big Buck Bunny).
-                    REPLACE the 'src' attribute below with your actual live TV streaming URL (.m3u8, .mp4, etc.).
-                -->
-                <video
-                    id="main-tv-player"
-                    controls
-                    preload="none"
-                    class="w-full aspect-video rounded-t-xl"
-                    poster="https://placehold.co/1280x720/1f2937/ffffff?text=beFlix+Live+TV"
-                    src="https://www.youtube.com/embed/a6D6YfDNaIs"
-                >
-                    <p class="text-center p-4 text-red-400">Your browser does not support the video tag or the stream format.</p>
-                </video>
-                <div class="p-4 md:p-6">
-                    <h3 class="text-2xl font-semibold">beFlix Main Channel</h3>
-                    <p class="text-gray-400 mt-1">Live 24/7 stream of curated content.</p>
+        <!-- 1. HERO SECTION -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center py-16">
+            <p class="text-lg mb-4 font-mono text-gray-400 reveal-item">Hello, my name is</p>
+            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black mb-4 reveal-item delay-200" style="color: var(--text-color);">
+                ASHEN ATTHANAYAKA
+            </h1>
+            <h2 id="typed-text" class="text-3xl sm:text-4xl lg:text-5xl font-light mb-8 reveal-item delay-400" style="color: var(--neon-cyan);">
+                <span class="blinking-cursor border-r-2" style="border-color: var(--neon-cyan);"></span>
+            </h2>
+            <p class="max-w-3xl text-xl text-gray-400 mb-10 reveal-item delay-600">
+                Building robust, modern, and high-performance full-stack applications with a focus on clean code and user experience.
+            </p>
+            <a href="#projects" class="neon-button text-base bg-white text-dark-bg px-8 py-3 rounded-md font-bold reveal-item delay-800">
+                View My Code
+            </a>
+        </section>
+
+        <!-- 2. ABOUT SECTION -->
+        <section id="about" class="py-24 border-t border-gray-800">
+            <h3 class="text-4xl font-bold mb-12 text-center reveal-item">
+                <span style="color: var(--neon-cyan);">//</span> About Me
+            </h3>
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-2/3 reveal-item">
+                    <p class="mb-4 text-gray-300">
+                        I am a dedicated **Full-Stack Developer** based in [Your Location]. My journey began with a curiosity for how complex systems are built, leading me to specialize in both front-end aesthetics and back-end logic. I thrive on solving intricate problems and transforming ideas into practical, scalable web solutions.
+                    </p>
+                    <p class="mb-4 text-gray-300">
+                        My primary focus is on the modern JavaScript ecosystem, specifically utilizing frameworks like **React** and **Node.js**. I am passionate about cloud infrastructure, continuous integration, and optimizing web performance.
+                    </p>
+                    <p class="text-gray-300">
+                        When I'm not coding, you can find me [mention a hobby, e.g., contributing to open source, studying new programming paradigms, or hiking].
+                    </p>
+                </div>
+                <!-- Placeholder for Profile Picture/Avatar -->
+                <div class="lg:w-1/3 flex justify-center reveal-item delay-200">
+                    <div class="w-64 h-64 bg-gray-700 rounded-lg shadow-2xl relative" 
+                         style="box-shadow: 0 0 20px var(--neon-cyan); border: 2px solid var(--neon-cyan);">
+                        <!-- Image placeholder: Replace with your image URL -->
+                        <img src="https://placehold.co/256x256/121212/00ffff?text=A.A." alt="Ashen Atthanayaka Profile" class="w-full h-full object-cover rounded-lg opacity-80" onerror="this.src='https://placehold.co/256x256/121212/00ffff?text=A.A.'" />
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Radio Streams Section -->
-        <section id="radio-section" class="space-y-6">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-white border-l-4 border-red-600 pl-4 py-1">Web Radio Channels</h2>
+        <!-- 3. SKILLS SECTION -->
+        <section id="skills" class="py-24 border-t border-gray-800">
+            <h3 class="text-4xl font-bold mb-12 text-center reveal-item">
+                <span style="color: var(--neon-cyan);">//</span> Core Stack
+            </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
-                <!-- Radio Card 1: Chillwave FM (Lo-fi Stream) -->
-                <div class="stream-card bg-gray-800 rounded-xl overflow-hidden shadow-xl p-4 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7.5 7.5a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0V7.5zM12 9a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0V9zM16.5 10a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0V10zM3 11.5a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0V11.5z" clip-rule="evenodd"></path>
-                            </svg>
-                            <h3 class="text-xl font-semibold">Chillwave FM</h3>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-4">Lo-fi beats and relaxing music for focus and study.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Skill Card Example -->
+                <div class="bg-dark-card p-6 rounded-lg border border-gray-700 reveal-item hover:border-neon-cyan transition duration-300">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="layout-grid" class="w-6 h-6" style="color: var(--neon-cyan);"></i>
+                        <h4 class="font-bold text-lg">Front-End</h4>
                     </div>
-                    <!-- WORKING STREAM URL ADDED -->
-                    <audio controls class="w-full mt-2 rounded-lg bg-gray-900">
-                        <source src="https://radio.chillout.zone/mp3/" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                    <ul class="text-sm text-gray-400 list-disc pl-5 space-y-1">
+                        <li>React, Vue.js</li>
+                        <li>Tailwind CSS, SCSS</li>
+                        <li>TypeScript, HTML5</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-dark-card p-6 rounded-lg border border-gray-700 reveal-item delay-100 hover:border-neon-cyan transition duration-300">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="server" class="w-6 h-6" style="color: var(--neon-cyan);"></i>
+                        <h4 class="font-bold text-lg">Back-End</h4>
+                    </div>
+                    <ul class="text-sm text-gray-400 list-disc pl-5 space-y-1">
+                        <li>Node.js, Express</li>
+                        <li>Python, Django</li>
+                        <li>RESTful APIs</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-dark-card p-6 rounded-lg border border-gray-700 reveal-item delay-200 hover:border-neon-cyan transition duration-300">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="database" class="w-6 h-6" style="color: var(--neon-cyan);"></i>
+                        <h4 class="font-bold text-lg">Database</h4>
+                    </div>
+                    <ul class="text-sm text-gray-400 list-disc pl-5 space-y-1">
+                        <li>PostgreSQL, MongoDB</li>
+                        <li>SQL & NoSQL</li>
+                        <li>Firebase/Firestore</li>
+                    </ul>
                 </div>
 
-                <!-- Radio Card 2: Global News 24/7 (Using a classical stream for reliable testing) -->
-                <div class="stream-card bg-gray-800 rounded-xl overflow-hidden shadow-xl p-4 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
-                                <path fill-rule="evenodd" d="M18.42 10.51a8 8 0 10-16.84 0h16.84zM10 3.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13z" clip-rule="evenodd"></path>
-                            </svg>
-                            <h3 class="text-xl font-semibold">Global News 24/7</h3>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-4">The latest headlines, politics, and world events.</p>
+                <div class="bg-dark-card p-6 rounded-lg border border-gray-700 reveal-item delay-300 hover:border-neon-cyan transition duration-300">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i data-lucide="cloud" class="w-6 h-6" style="color: var(--neon-cyan);"></i>
+                        <h4 class="font-bold text-lg">DevOps</h4>
                     </div>
-                    <!-- WORKING STREAM URL ADDED -->
-                    <audio controls class="w-full mt-2 rounded-lg bg-gray-900">
-                        <source src="https://icecast.vrtcdn.be/classic-mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                    <ul class="text-sm text-gray-400 list-disc pl-5 space-y-1">
+                        <li>AWS, Docker</li>
+                        <li>CI/CD, GitHub Actions</li>
+                        <li>Linux & Scripting</li>
+                    </ul>
                 </div>
 
-                <!-- Radio Card 3: Retro Hits Station -->
-                <div class="stream-card bg-gray-800 rounded-xl overflow-hidden shadow-xl p-4 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13 14H7a1 1 0 000 2h6a1 1 0 000-2z"></path>
-                                <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm6.5 1a.5.5 0 00-1 0v4.793L7.146 9.646a.5.5 0 00-.708.708l2 2a.5.5 0 00.708 0l2-2a.5.5 0 10-.708-.708L10 10.793V6.5z" clip-rule="evenodd"></path>
-                            </svg>
-                            <h3 class="text-xl font-semibold">Retro Hits Station</h3>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-4">All the best pop and rock songs from the 80s and 90s.</p>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS SECTION -->
+        <section id="projects" class="py-24 border-t border-gray-800">
+            <h3 class="text-4xl font-bold mb-12 text-center reveal-item">
+                <span style="color: var(--neon-cyan);">//</span> Featured Projects
+            </h3>
+            
+            <div class="space-y-10">
+                <!-- Project 1 -->
+                <div class="bg-dark-card p-6 md:p-10 rounded-xl border border-gray-700 reveal-item">
+                    <h4 class="text-2xl font-bold mb-2 hover:text-white transition duration-200" style="color: var(--neon-cyan);">
+                        Tech-Blog Platform
+                    </h4>
+                    <p class="text-gray-400 mb-4">A high-performance blog platform built for developers, featuring markdown support, server-side rendering, and advanced search functionality.</p>
+                    <p class="text-sm font-mono text-gray-500 mb-4">Stack: Next.js, TypeScript, PostgreSQL, Tailwind CSS</p>
+                    <div class="flex space-x-4 text-sm">
+                        <a href="#" class="text-gray-300 hover:text-neon-cyan transition duration-200 flex items-center">
+                            <i data-lucide="link" class="w-4 h-4 mr-1"></i> Live Site
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-neon-cyan transition duration-200 flex items-center">
+                            <i data-lucide="github" class="w-4 h-4 mr-1"></i> GitHub Repo
+                        </a>
                     </div>
-                    <!-- WORKING STREAM URL ADDED -->
-                    <audio controls class="w-full mt-2 rounded-lg bg-gray-900">
-                        <source src="https://streaming.web-solutions.sk/nostalgie_hq-mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
                 </div>
 
-                <!-- Radio Card 4: Indie Discovery -->
-                <div class="stream-card bg-gray-800 rounded-xl overflow-hidden shadow-xl p-4 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center space-x-3 mb-3">
-                            <svg class="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 13h14v2H2zM2 8h14v2H2zM2 3h14v2H2z"></path>
-                            </svg>
-                            <h3 class="text-xl font-semibold">Indie Discovery</h3>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-4">Discover the latest independent artists and genres.</p>
+                <!-- Project 2 -->
+                <div class="bg-dark-card p-6 md:p-10 rounded-xl border border-gray-700 reveal-item delay-200">
+                    <h4 class="text-2xl font-bold mb-2 hover:text-white transition duration-200" style="color: var(--neon-cyan);">
+                        Real-Time Collaboration App
+                    </h4>
+                    <p class="text-gray-400 mb-4">A web application allowing multiple users to edit a document simultaneously using WebSockets and a structured conflict-resolution algorithm.</p>
+                    <p class="text-sm font-mono text-gray-500 mb-4">Stack: Node.js, Express, Socket.IO, Vue.js, MongoDB</p>
+                    <div class="flex space-x-4 text-sm">
+                        <a href="#" class="text-gray-300 hover:text-neon-cyan transition duration-200 flex items-center">
+                            <i data-lucide="link" class="w-4 h-4 mr-1"></i> Live Site
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-neon-cyan transition duration-200 flex items-center">
+                            <i data-lucide="github" class="w-4 h-4 mr-1"></i> GitHub Repo
+                        </a>
                     </div>
-                    <!-- WORKING STREAM URL ADDED -->
-                    <audio controls class="w-full mt-2 rounded-lg bg-gray-900">
-                        <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/CKUOFM_SC" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
                 </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal-item delay-400">
+                <a href="#" class="text-gray-400 hover:text-neon-cyan transition duration-200 flex items-center justify-center">
+                    View All Projects on GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                </a>
+            </div>
+        </section>
 
+        <!-- 5. CONTACT SECTION -->
+        <section id="contact" class="py-24 border-t border-gray-800">
+            <h3 class="text-4xl font-bold mb-12 text-center reveal-item">
+                <span style="color: var(--neon-cyan);">//</span> Get In Touch
+            </h3>
+            <div class="max-w-xl mx-auto text-center reveal-item delay-200">
+                <p class="text-xl text-gray-300 mb-8">
+                    I am currently open to new full-stack opportunities and collaborations. Whether you have a question or just want to say hi, feel free to reach out.
+                </p>
+                <a href="mailto:ashen.atthanayaka@example.com" class="neon-button bg-transparent border-2 border-neon-cyan px-10 py-4 rounded-md font-bold text-neon-cyan">
+                    Send Me an Email
+                </a>
+                
+                <div class="flex justify-center space-x-6 mt-12">
+                    <a href="#" class="text-gray-400 hover:text-neon-cyan transition duration-200" title="LinkedIn">
+                        <i data-lucide="linkedin" class="w-8 h-8"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-neon-cyan transition duration-200" title="GitHub">
+                        <i data-lucide="github" class="w-8 h-8"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-neon-cyan transition duration-200" title="Twitter/X">
+                        <i data-lucide="twitter" class="w-8 h-8"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-950 mt-12 p-6 text-center text-gray-500">
-        &copy; 2024 beFlix Streaming Service. All rights reserved.
+    <footer class="text-center py-8 border-t border-gray-800 mt-16">
+        <p class="text-sm text-gray-500">
+            Designed & Built by Ashen Atthanayaka &copy; 2025
+        </p>
     </footer>
 
     <script>
-        // Simple JavaScript for improving the experience
-        document.addEventListener('DOMContentLoaded', () => {
-            const radioPlayers = document.querySelectorAll('audio');
+        // --- MANDATORY FIREBASE SETUP ---
+        // These variables are provided by the canvas environment.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        // Note: We don't initialize or use Firestore here, but we keep the structure for platform compliance.
+        // ----------------------------------
 
-            // Function to ensure only one radio stream plays at a time
-            radioPlayers.forEach(player => {
-                player.addEventListener('play', (event) => {
-                    radioPlayers.forEach(otherPlayer => {
-                        if (otherPlayer !== event.target) {
-                            otherPlayer.pause();
-                        }
-                    });
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lucide icons
+            lucide.createIcons();
+
+            // 1. TYPING ANIMATION EFFECT for the Hero Text
+            const typedElement = document.getElementById('typed-text');
+            const textToType = "Full-Stack Developer | Creator | Engineer";
+            let i = 0;
+            const typingSpeed = 50;
+
+            function typeWriter() {
+                if (i < textToType.length) {
+                    typedElement.innerHTML = textToType.substring(0, i + 1) + ' <span class="blinking-cursor border-r-2" style="border-color: var(--neon-cyan);"></span>';
+                    i++;
+                    setTimeout(typeWriter, typingSpeed);
+                } else {
+                    // Stop the blinking cursor after typing is complete
+                    typedElement.querySelector('.blinking-cursor').style.animation = 'none';
+                    typedElement.querySelector('.blinking-cursor').style.borderColor = 'transparent';
+                }
+            }
+            
+            // Start the typing animation after the page loads
+            setTimeout(typeWriter, 1000); 
+
+            // 2. SCROLL REVEAL ANIMATION (Intersection Observer)
+            const revealItems = document.querySelectorAll('.reveal-item');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        // Stop observing once it's visible
+                        observer.unobserve(entry.target);
+                    }
                 });
+            }, {
+                // Set the viewport margin to trigger the animation slightly early
+                rootMargin: '0px', 
+                threshold: 0.1 
             });
 
-            // Prevent simultaneous video and audio playback (optional, but good practice)
-            const mainVideo = document.getElementById('main-tv-player');
-            if (mainVideo) {
-                mainVideo.addEventListener('play', () => {
-                    radioPlayers.forEach(player => player.pause());
-                });
-
-                radioPlayers.forEach(player => {
-                    player.addEventListener('play', () => {
-                        mainVideo.pause();
-                    });
-                });
-            }
+            revealItems.forEach(item => {
+                observer.observe(item);
+            });
         });
     </script>
 </body>
 </html>
-
