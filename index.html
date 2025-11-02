@@ -3,200 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Data Stream | Modern Tech News & Analysis</title>
-    <!-- Load Tailwind CSS CDN -->
+    <title>Matrix Logistics - Global Shipping Solutions</title>
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Lucide icons -->
+    <!-- Load Lucide Icons for professional-looking symbols -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Mono:wght@400;700&display=swap');
-        
+        /* Custom configuration for Tailwind colors and font */
         :root {
-            --primary-bg: #0f172a; /* Deep Slate/Navy */
-            --secondary-bg: #1e293b; /* Darker Slate for cards */
-            --accent-color: #3b82f6; /* Bright Blue */
-            --text-main: #f8fafc; /* Near White */
-            --text-muted: #94a3b8; /* Light Slate */
+            --matrix-blue: #0A3D62; /* Deep Blue */
+            --matrix-accent: #00A8A5; /* Teal/Cyan Accent */
+            --matrix-bg: #F8F9FA;
         }
-
+        .container-padding {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        @media (min-width: 640px) {
+            .container-padding {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .container-padding {
+                padding-left: 5rem;
+                padding-right: 5rem;
+            }
+        }
+        /* Custom Scroll Snap for a smoother scrolling experience */
+        .snap-section {
+            scroll-snap-align: start;
+        }
+        /* Load Inter font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-main);
+            background-color: var(--matrix-bg);
             scroll-behavior: smooth;
-        }
-
-        /* Styling for the Read More button */
-        .read-more-btn {
-            background-color: var(--accent-color);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        .read-more-btn:hover {
-            background-color: #1d4ed8;
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Animation for article cards on hover */
-        .article-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
-<body class="antialiased">
-    
-    <!-- Header and Navigation -->
-    <header class="sticky top-0 z-50 bg-[rgba(15,23,42,0.95)] border-b border-slate-700 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="#" class="text-3xl font-extrabold tracking-tight" style="color: var(--accent-color);">
-                The Data Stream.
+<body class="text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-lg">
+        <nav class="mx-auto flex items-center justify-between container-padding py-4">
+            <!-- Logo -->
+            <a href="#" class="flex items-center text-3xl font-extrabold text-[var(--matrix-blue)]">
+                MATRIX<span class="text-[var(--matrix-accent)] font-light">.</span>
             </a>
-            <div class="space-x-6 hidden md:flex">
-                <a href="#" class="text-sm text-text-muted hover:text-white transition duration-200">AI Trends</a>
-                <a href="#" class="text-sm text-text-muted hover:text-white transition duration-200">DevOps</a>
-                <a href="#" class="text-sm text-text-muted hover:text-white transition duration-200">Security</a>
-                <a href="#" class="text-sm text-text-muted hover:text-white transition duration-200">Contact</a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="#products" class="text-gray-600 hover:text-[var(--matrix-accent)] transition duration-200">Services</a>
+                <a href="#technology" class="text-gray-600 hover:text-[var(--matrix-accent)] transition duration-200">Technology</a>
+                <a href="#benefits" class="text-gray-600 hover:text-[var(--matrix-accent)] transition duration-200">Benefits</a>
+                <a href="#contact" class="px-6 py-2 bg-[var(--matrix-blue)] text-white rounded-lg shadow-md hover:bg-opacity-90 transition duration-300">Track Shipment</a>
             </div>
-            <!-- Search Icon -->
-            <button class="text-text-muted hover:text-white p-2 rounded-full transition duration-200">
-                <i data-lucide="search" class="w-5 h-5"></i>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition duration-200">
+                <i data-lucide="menu" class="w-7 h-7"></i>
             </button>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl">
+            <div class="px-4 pt-2 pb-4 space-y-2 flex flex-col items-center">
+                <a href="#products" class="w-full text-center py-2 text-lg font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Services</a>
+                <a href="#technology" class="w-full text-center py-2 text-lg font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Technology</a>
+                <a href="#benefits" class="w-full text-center py-2 text-lg font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Benefits</a>
+                <a href="#contact" class="w-full text-center mt-2 px-6 py-3 bg-[var(--matrix-accent)] text-white rounded-xl shadow-lg hover:bg-opacity-90 transition duration-300">Track Shipment</a>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+    <main>
+        <!-- 1. Hero Section -->
+        <section class="relative h-screen flex items-center justify-center container-padding overflow-hidden bg-cover bg-center"
+            style="background-image: url('https://placehold.co/1920x1080/0A3D62/ffffff?text=Global+Shipping+Network+Visual');">
+            <!-- Overlay to increase text contrast -->
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
-        <!-- 1. FEATURED ARTICLE SECTION -->
-        <section class="mb-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-secondary-bg rounded-xl p-6 md:p-10 border border-slate-700">
-                <!-- Image Placeholder -->
-                <div class="rounded-lg overflow-hidden h-64 md:h-full">
-                    <img src="https://placehold.co/800x600/1e293b/3b82f6?text=FEATURED+STORY" 
-                         alt="Featured article image" class="w-full h-full object-cover transition duration-500 hover:scale-[1.02]" />
-                </div>
-                
-                <!-- Content -->
-                <div class="flex flex-col justify-center">
-                    <p class="text-sm font-semibold mb-2" style="color: var(--accent-color);">TRENDING NOW</p>
-                    <h1 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">
-                        The Next Frontier: Why Quantum AI Is Set to Redefine Computing
-                    </h1>
-                    <p class="text-lg text-text-muted mb-6">
-                        Explore how the convergence of quantum mechanics and machine learning is rapidly moving from theoretical white papers to practical applications, promising exponential shifts in processing power and data analysis.
-                    </p>
-                    <div class="flex items-center space-x-4 mb-6 text-sm text-slate-500">
-                        <span class="flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-1"></i> Nov 3, 2025</span>
-                        <span class="flex items-center"><i data-lucide="user" class="w-4 h-4 mr-1"></i> By Jane Doe</span>
-                    </div>
-                    <a href="#" class="read-more-btn inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-white font-bold rounded-lg shadow-lg">
-                        Read Full Analysis <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. RECENT POSTS GRID -->
-        <section>
-            <h2 class="text-3xl font-bold mb-10 text-center md:text-left">Recent Developments</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Article Card 1 -->
-                <div class="article-card bg-secondary-bg rounded-xl overflow-hidden border border-slate-700 transition duration-300">
-                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Cyber+Security" alt="Cyber Security article" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <p class="text-xs font-semibold mb-2 text-text-muted">SECURITY & DEFENSE</p>
-                        <h3 class="text-xl font-bold mb-3 hover:text-accent-color transition duration-200">
-                            Zero-Trust Architectures: Why Perimeter Security is Dead
-                        </h3>
-                        <p class="text-sm text-text-muted mb-4">
-                            How modern networks are adopting zero-trust principles to protect against complex internal and external threats.
-                        </p>
-                        <a href="#" class="text-accent-color text-sm font-semibold hover:underline">Continue Reading &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- Article Card 2 -->
-                <div class="article-card bg-secondary-bg rounded-xl overflow-hidden border border-slate-700 transition duration-300">
-                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Edge+Computing" alt="Edge Computing article" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <p class="text-xs font-semibold mb-2 text-text-muted">CLOUD & DEVOPS</p>
-                        <h3 class="text-xl font-bold mb-3 hover:text-accent-color transition duration-200">
-                            The Rise of Edge Computing in Industrial IoT
-                        </h3>
-                        <p class="text-sm text-text-muted mb-4">
-                            Analyzing the infrastructure shift as data processing moves closer to the source for lower latency.
-                        </p>
-                        <a href="#" class="text-accent-color text-sm font-semibold hover:underline">Continue Reading &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- Article Card 3 -->
-                <div class="article-card bg-secondary-bg rounded-xl overflow-hidden border border-slate-700 transition duration-300">
-                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Metaverse+Impact" alt="Metaverse Impact article" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <p class="text-xs font-semibold mb-2 text-text-muted">VIRTUAL REALITY</p>
-                        <h3 class="text-xl font-bold mb-3 hover:text-accent-color transition duration-200">
-                            Beyond Gaming: Metaverse Applications in Corporate Training
-                        </h3>
-                        <p class="text-sm text-text-muted mb-4">
-                            A deep dive into how immersive technology is revolutionizing professional development and collaboration.
-                        </p>
-                        <a href="#" class="text-accent-color text-sm font-semibold hover:underline">Continue Reading &rarr;</a>
-                    </div>
-                </div>
-
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#" class="text-accent-color text-lg font-semibold hover:underline flex items-center justify-center">
-                    Load More Articles <i data-lucide="refresh-cw" class="w-4 h-4 ml-2"></i>
+            <div class="relative z-10 max-w-4xl text-center text-white p-6">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-4 animate-fadeIn">
+                    The Future of Global Logistics, <span class="text-[var(--matrix-accent)]">Delivered.</span>
+                </h1>
+                <p class="text-xl md:text-2xl font-light mb-8 opacity-0 animate-slideIn" style="animation-delay: 0.5s;">
+                    Seamless, secure, and smart transportation solutions across Air, Sea, and Land.
+                </p>
+                <a href="#products" class="inline-block px-10 py-4 text-xl font-bold bg-[var(--matrix-accent)] text-white rounded-xl shadow-2xl hover:bg-opacity-80 transform hover:scale-105 transition duration-500 opacity-0 animate-slideIn" style="animation-delay: 1s;">
+                    Explore Our Services
                 </a>
             </div>
         </section>
-        
-        <!-- 3. EMAIL SIGNUP CALLOUT -->
-        <section class="mt-20 py-16 bg-secondary-bg rounded-xl text-center border border-slate-700">
-            <h3 class="text-3xl font-bold mb-3">Stay Ahead of the Curve</h3>
-            <p class="text-lg text-text-muted mb-8">Subscribe to our newsletter for daily data streams directly to your inbox.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 max-w-lg mx-auto">
-                <input type="email" placeholder="Enter your email address" 
-                       class="flex-grow p-3 rounded-lg bg-primary-bg border border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-accent-color" />
-                <button class="read-more-btn px-6 py-3 rounded-lg text-white font-bold">
-                    Subscribe
+
+        <!-- 2. Products/Services Section -->
+        <section id="products" class="py-20 bg-white snap-section">
+            <div class="max-w-7xl mx-auto container-padding">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-[var(--matrix-blue)]">
+                    Our Comprehensive Products
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Product Card 1: Sea Freight -->
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-b-4 border-[var(--matrix-accent)]">
+                        <div class="text-[var(--matrix-accent)] mb-4"><i data-lucide="ship" class="w-10 h-10"></i></div>
+                        <h3 class="text-2xl font-bold mb-3 text-[var(--matrix-blue)]">Sea Freight Solutions</h3>
+                        <p class="text-gray-600 mb-6">Full Container Load (FCL) and Less than Container Load (LCL) options with optimized routes for maximum cost efficiency and global reach. Bulk and specialty cargo handling.</p>
+                        <a href="#" class="text-[var(--matrix-accent)] font-semibold flex items-center group">
+                            Learn More 
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Product Card 2: Air Cargo -->
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-b-4 border-[var(--matrix-accent)]">
+                        <div class="text-[var(--matrix-accent)] mb-4"><i data-lucide="plane" class="w-10 h-10"></i></div>
+                        <h3 class="text-2xl font-bold mb-3 text-[var(--matrix-blue)]">Air Cargo Express</h3>
+                        <p class="text-gray-600 mb-6">Fast, reliable air transport for time-critical and high-value shipments. Charter options available for large or unusual cargo. Global express delivery network coverage.</p>
+                        <a href="#" class="text-[var(--matrix-accent)] font-semibold flex items-center group">
+                            Learn More 
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Product Card 3: Land Transport -->
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-b-4 border-[var(--matrix-accent)]">
+                        <div class="text-[var(--matrix-accent)] mb-4"><i data-lucide="truck" class="w-10 h-10"></i></div>
+                        <h3 class="text-2xl font-bold mb-3 text-[var(--matrix-blue)]">Integrated Land Freight</h3>
+                        <p class="text-gray-600 mb-6">First and last-mile connectivity with road and rail services. Secure, temperature-controlled, and oversized transport options across all continents.</p>
+                        <a href="#" class="text-[var(--matrix-accent)] font-semibold flex items-center group">
+                            Learn More 
+                            <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Improvements & Technology Section -->
+        <section id="technology" class="py-20 bg-[var(--matrix-blue)] text-white snap-section">
+            <div class="max-w-7xl mx-auto container-padding">
+                <div class="md:flex md:items-center md:space-x-12">
+                    <!-- Image/Visual Placeholder for Technology -->
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <img src="https://placehold.co/600x400/00A8A5/ffffff?text=AI+Powered+Control+Dashboard" 
+                             alt="AI Powered Control Dashboard" 
+                             class="rounded-2xl shadow-2xl w-full h-auto object-cover border-4 border-[var(--matrix-accent)]">
+                    </div>
+
+                    <!-- Technology Description -->
+                    <div class="md:w-1/2">
+                        <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+                            Matrix <span class="text-[var(--matrix-accent)]">IntelliTrack™</span>: The Next Generation of Logistics
+                        </h2>
+                        <p class="text-xl font-light mb-8 text-gray-200">
+                            We continuously invest in innovation to provide unparalleled transparency and efficiency. Our proprietary platform offers real-time visibility and predictive risk analysis.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <!-- Feature 1 -->
+                            <div class="flex items-start">
+                                <i data-lucide="trending-up" class="w-6 h-6 mr-3 mt-1 text-[var(--matrix-accent)] flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Predictive Route Optimization</h4>
+                                    <p class="text-gray-300">AI-driven algorithms predict and avoid delays before they occur, improving transit times by up to 15%.</p>
+                                </div>
+                            </div>
+                            <!-- Feature 2 -->
+                            <div class="flex items-start">
+                                <i data-lucide="lock" class="w-6 h-6 mr-3 mt-1 text-[var(--matrix-accent)] flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Blockchain Security Ledger</h4>
+                                    <p class="text-gray-300">Tamper-proof documentation and transparent custody transfer for ultimate cargo security and compliance.</p>
+                                </div>
+                            </div>
+                            <!-- Feature 3 -->
+                            <div class="flex items-start">
+                                <i data-lucide="globe" class="w-6 h-6 mr-3 mt-1 text-[var(--matrix-accent)] flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">360° Real-Time GPS Tracking</h4>
+                                    <p class="text-gray-300">Pinpoint location, temperature, and shock monitoring available on all critical shipments, 24/7.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Benefits Section -->
+        <section id="benefits" class="py-20 bg-gray-50 snap-section">
+            <div class="max-w-7xl mx-auto container-padding">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-[var(--matrix-blue)]">
+                    Benefits for Your Business
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Benefit 1 -->
+                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
+                            <i data-lucide="dollar-sign" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Cost Optimization</h4>
+                        <p class="text-gray-600">Dynamic pricing models and efficient resource allocation reduce your overall shipping spend.</p>
+                    </div>
+
+                    <!-- Benefit 2 -->
+                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
+                            <i data-lucide="clock" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Guaranteed Timeliness</h4>
+                        <p class="text-gray-600">Industry-leading on-time delivery rates supported by smart scheduling and contingency planning.</p>
+                    </div>
+                    
+                    <!-- Benefit 3 -->
+                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
+                            <i data-lucide="check-circle" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Regulatory Compliance</h4>
+                        <p class="text-gray-600">Expert global customs and compliance team ensures seamless international trade with zero hassle.</p>
+                    </div>
+                    
+                    <!-- Benefit 4 -->
+                    <div class="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="bg-[var(--matrix-accent)] p-3 rounded-full mb-4">
+                            <i data-lucide="leaf" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 text-[var(--matrix-blue)]">Sustainable Shipping</h4>
+                        <p class="text-gray-600">Committed to reducing our carbon footprint with optimized routes and eco-friendly transport options.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CTA Section (Contact) -->
+        <section id="contact" class="py-20 bg-[var(--matrix-accent)] text-white snap-section">
+            <div class="max-w-4xl mx-auto text-center container-padding">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+                    Ready to Transform Your Supply Chain?
+                </h2>
+                <p class="text-xl font-light mb-8">
+                    Connect with a Matrix logistics expert today to design a personalized shipping strategy.
+                </p>
+                <button onclick="document.getElementById('contact-form-modal').classList.remove('hidden')" class="px-10 py-4 text-xl font-bold bg-white text-[var(--matrix-blue)] rounded-xl shadow-2xl hover:bg-gray-100 transform hover:scale-105 transition duration-500">
+                    Get a Free Quote
                 </button>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="text-center py-10 mt-16 border-t border-slate-700">
-        <p class="text-sm text-slate-500 mb-4">
-            The Data Stream | Independent Tech Analysis & Reporting
-        </p>
-        <div class="flex justify-center space-x-6">
-            <a href="#" class="text-slate-400 hover:text-accent-color transition duration-200" title="RSS Feed">
-                <i data-lucide="rss" class="w-5 h-5"></i>
-            </a>
-            <a href="#" class="text-slate-400 hover:text-accent-color transition duration-200" title="Twitter">
-                <i data-lucide="twitter" class="w-5 h-5"></i>
-            </a>
-            <a href="#" class="text-slate-400 hover:text-accent-color transition duration-200" title="LinkedIn">
-                <i data-lucide="linkedin" class="w-5 h-5"></i>
-            </a>
+    <footer class="bg-gray-900 text-gray-400 py-10">
+        <div class="max-w-7xl mx-auto container-padding grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4">Matrix Logistics</h4>
+                <p class="text-sm">Driving global commerce with integrity and innovation since 1995.</p>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#products" class="hover:text-[var(--matrix-accent)] transition">Services</a></li>
+                    <li><a href="#technology" class="hover:text-[var(--matrix-accent)] transition">Technology</a></li>
+                    <li><a href="#benefits" class="hover:text-[var(--matrix-accent)] transition">Benefits</a></li>
+                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4">Resources</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Customer Login</a></li>
+                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">FAQ</a></li>
+                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-[var(--matrix-accent)] transition">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4">Contact Us</h4>
+                <p class="text-sm">Global HQ: 123 Logistics Way, New York, USA</p>
+                <p class="text-sm">Phone: +1 (800) MATRIX-0</p>
+                <p class="text-sm">Email: info@matrixlogistics.com</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="text-white hover:text-[var(--matrix-accent)]"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-white hover:text-[var(--matrix-accent)]"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-white hover:text-[var(--matrix-accent)]"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
+            &copy; 2025 Matrix Global Shipping. All Rights Reserved.
         </div>
     </footer>
+    
+    <!-- Modal for Contact Form (Simple Quote Request) -->
+    <div id="contact-form-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-11/12 transform transition-all duration-300 scale-100">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-[var(--matrix-blue)]">Request a Quote</h3>
+                <button onclick="document.getElementById('contact-form-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form>
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-medium mb-1">Full Name</label>
+                    <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[var(--matrix-accent)] focus:border-[var(--matrix-accent)]" placeholder="Your Name" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-1">Email Address</label>
+                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[var(--matrix-accent)] focus:border-[var(--matrix-accent)]" placeholder="your.email@company.com" required>
+                </div>
+                <div class="mb-6">
+                    <label for="details" class="block text-gray-700 font-medium mb-1">Shipment Details (Volume, Origin, Destination)</label>
+                    <textarea id="details" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[var(--matrix-accent)] focus:border-[var(--matrix-accent)]" placeholder="LCL from Shanghai to Rotterdam, 2 pallets"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3 bg-[var(--matrix-blue)] text-white font-bold rounded-xl hover:bg-opacity-90 transition duration-300">
+                    Submit Request
+                </button>
+            </form>
+        </div>
+    </div>
+
 
     <script>
-        // Initialize Lucide icons
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // JavaScript for Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Change icon on click
+            const icon = mobileMenuButton.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons(); // Re-render icon
         });
-        
-        // Note: No advanced JavaScript functionality is included, keeping the site focused on a static content layout.
+
+        // Close mobile menu when a link is clicked
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.querySelector('i').setAttribute('data-lucide', 'menu');
+                    lucide.createIcons();
+                }
+            });
+        });
+
+        // Simple animation trigger on scroll (for a modern feel)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn', 'animate-slideIn');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-fadeIn, .animate-slideIn').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add CSS keyframes (since we can't use style blocks inside the JS part)
+        // This is necessary because the animation-delay styles are inline.
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fadeIn {
+                animation: fadeIn 1s ease-out forwards;
+            }
+            .animate-slideIn {
+                animation: slideIn 1s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(style);
+
     </script>
 </body>
 </html>
