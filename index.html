@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashen Atthanayaka - Under Construction</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for custom colors and font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#4A90E2',
+                        'secondary-cyan': '#50E3C2',
+                        'dark-bg': '#141424',
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for the liquid background */
+        .liquid-bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Keep it behind the content */
+        }
+
+        /* The two "liquid blobs" */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(150px); /* Massive blur for the liquid effect */
+            opacity: 0.6; /* Slight transparency */
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            will-change: transform; /* Performance boost for animations */
+        }
+
+        /* Blob 1: Vibrant blue, slow movement */
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: theme('colors.primary-blue');
+            top: 10%;
+            left: 10%;
+            animation: move-blob-1 15s ease-in-out infinite;
+        }
+
+        /* Blob 2: Cyan/Teal, faster movement */
+        .blob-2 {
+            width: 600px;
+            height: 600px;
+            background: theme('colors.secondary-cyan');
+            bottom: 5%;
+            right: 5%;
+            animation: move-blob-2 18s ease-in-out infinite reverse;
+        }
+
+        /* Keyframes for the liquid movement */
+        @keyframes move-blob-1 {
+            0% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(300px, -200px) scale(1.1); }
+            100% { transform: translate(-100px, 150px) scale(0.9); }
+        }
+
+        @keyframes move-blob-2 {
+            0% { transform: translate(0px, 0px) scale(1); }
+            40% { transform: translate(-250px, 150px) scale(1.05); }
+            100% { transform: translate(150px, -100px) scale(0.95); }
+        }
+
+        /* Custom text shadow for the glass effect (optional but nice) */
+        .text-glass-shadow {
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Ensure backdrop-filter is applied correctly for Glassmorphism */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); /* Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-dark-bg font-sans min-h-screen flex items-center justify-center p-4">
+
+    <!-- Liquid Background Wrapper -->
+    <div class="liquid-bg-wrapper">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Main Content Card (Glassmorphism) -->
+    <main class="w-full max-w-2xl mx-auto z-10">
+        <div class="glass-card rounded-3xl p-8 md:p-12 shadow-2xl transition-all duration-500 hover:shadow-primary-blue/50">
+            <h1 class="text-white text-3xl md:text-5xl font-extrabold mb-6 text-center text-glass-shadow leading-tight">
+                Hi, I'm Ashen Atthanayaka
+            </h1>
+            <p class="text-gray-200 text-lg md:text-2xl font-light text-center leading-relaxed">
+                Sorry, I'm doing my best to build this website. I need a little more time...
+                <span class="block mt-4 font-medium text-secondary-cyan/90">
+                    Please be patient.
+                </span>
+            </p>
+            <div class="mt-8 text-center">
+                <p class="text-white text-xl md:text-3xl font-bold text-glass-shadow">
+                    I'll give an update as soon as possible, cheers!
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
